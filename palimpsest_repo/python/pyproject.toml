@@ -1,0 +1,40 @@
+[build-system]
+requires      = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name        = "palimpsest"
+version     = "0.3.0"
+description = "Python backend for The Palimpsest — spherical Voronoi strategy game"
+requires-python = ">=3.11"
+dependencies = [
+    "scipy>=1.10",   # SphericalVoronoi — required for sphere generation
+    "numpy>=1.24",   # vectorised tectonic simulation
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.4",
+    "mypy>=1.9",
+]
+
+[project.scripts]
+palimpsest-bridge = "palimpsest.python.bridge.server:main"
+
+[tool.setuptools.packages.find]
+where    = ["../.."]
+include  = ["palimpsest*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths    = ["tests"]
+
+[tool.ruff]
+line-length    = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict         = true
